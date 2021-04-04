@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=devide-width, initial-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <title>Banco de preguntas</title>
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <h5 style="color:#9c27b0">Crear plantilla</h5>
+                </div>
+                <div class="col s12">
+                    Esta complemento (Addon) de Google Sheets le permitirá crear un banco de preguntas que podrá utilizar para <b>generar sus exámenes en Google Form</b> para las evaluaciones en Google Clasroom.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    Haz clic en el botón "Crear hoja plantilla" para que se cree una nueva hoja con la pantilla del banco de preguntas.
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" placeholder="Indique el nombre de la hoja" id="name" class="validate invalid" required="" aria-required="true"/>
+                    <label for="name">Nombre de la nueva hoja</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 center-align">
+                    <button class="btn" type="submit" onclick="google.script.run.applyTemplate($('#name').val())">
+                        <i class="material-icons">add</i>Crear hoja plantilla
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12 right-align">
+                    <button class="btn blue-grey" type="button" onclick="google.script.host.close()">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

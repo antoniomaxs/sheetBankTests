@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=devide-width, initial-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <title>Banco de preguntas</title>
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        
+        <script>
+           function generateForm(e){
+                e.preventDefault();
+              
+                $('#submitBtn').attr('disabled', 'disabled');
+                $('#loading').toggle();
+                google.script.run
+                .withSuccessHandler(function(text){
+                    //M.toast({html:text});
+                    $('#submitBtn').removeAttr('disabled');
+                    $('#loading').toggle();
+                })
+                .withFailureHandler(function(text){
+                    M.toast({html:text});
+                    $('#submitBtn').removeAttr('disabled');
+                    $('#loading').toggle();
+                })
+                .createFeedback();
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <form onsubmit="generateForm(event)">
+                <div class="row">
+                    <div class="col s12">
+                        <h5 style="color:#9c27b0">Crear Feedback</h5>
+                    </div>
+                    <div class="col s12">
+                        El complemento Banco de Preguntas le permitirá lanzar un formulario específico creado para obtener un feedback sobre la evaluación realizada a los alumnos.
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                    El feedback se deberá realizar inmediatamente posterior a la realización del exámen para obtener unos resultados óptimos y está compuesto por un tipo test de 10 preguntas que le permitirá obtener información de los alumnos sobre la realización del exámen.
+                    </div>
+                </div>
+                <div class="row" style="display: none;" id="loading">
+                    <div class="col s12" style="color:#9c27b0">
+                        Creando feedback
+                    </div>
+                    <div class="col s12 progress">
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 center-align">
+                        <button class="btn" type="submit" id="submitBtn">
+                            <i class="material-icons">assignment</i> Crear feedback
+                        </button>
+                        <button class="btn blue-grey" type="button" onclick="google.script.host.close()">Cerrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+
+</html>

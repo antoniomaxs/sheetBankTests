@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=devide-width, initial-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <title>Banco de preguntas</title>
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script>
+            $(document).ready(function(){
+               $('#levelsQ').formSelect();
+            });
+
+            function toogleLevelsQ(e){
+                $('#levelsQ').prop('disabled', function(i, v) { return !v; });
+                $('#levelsQ').formSelect();
+            }
+
+            function generateForm(e){
+                e.preventDefault();
+                var data = {
+                    keysq: $('#keysQ').is(':checked'),
+                    levelsq: (($('#optionLevelsQ').is(':checked'))?$('#levelsQ').val():''),
+                    numq: $('#numQ').val()
+                }
+                console.log("Datos a enviar " + JSON.stringify(data));
+                $('#submitBtn').attr('disabled', 'disabled');
+                $('#loading').toggle();
+                google.script.run
+                .withSuccessHandler(function(text){
+                    //M.toast({html:text});
+                    $('#submitBtn').removeAttr('disabled');
+                    $('#loading').toggle();
+                })
+                .withFailureHandler(function(text){
+                    M.toast({html:text});
+                    $('#submitBtn').removeAttr('disabled');
+                    $('#loading').toggle();
+                })
+                .createForm(data);
+            }
+
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <form onsubmit="generateForm(event)">
+                <div class="row">
+                    <div class="col s12">
+                        <h5 style="color:#9c27b0">Generador de examen</h5>
+                    </div>
+                    <div class="col s12">
+                        Esta complemento (Addon) de Google Sheets le permitirá crear un banco de preguntas que podrá utilizar para <b>generar sus exámenes.</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12" style="margin-bottom: 5px;">Indique el número de preguntas del examen</div>
+                    <div class="input-field col s12">
+                        <input type="number" placeholder="-" id="numQ" class="validate invalid" required="" aria-required="true"/>
+                        <label for="name">Número de preguntas del exámen</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12" style="margin-bottom: 5px;">Seleccione la siguiente opción si desea que el test incluya TODAS las preguntas marcadas como <u>"preguntas llave"</u>.</div>
+                    <div class="col s12">
+                        <label>
+                            <input type="checkbox" id="keysQ"/>
+                            <span>¿Utilizar todas las preguntas llave?</span>
+                        </label>
+                    </div>
+                    <!--
+                    <div class="col s6">
+                        <label>
+                            <input type="checkbox" onchange="$('#keysQ').prop('disabled', function(i, v) { return !v; })"/>
+                            <span>Utilizar preguntas llave obligatoriamente</span>
+                        </label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input type="number" placeholder="x" id="keysQ" disabled/>
+                        <label for="name">Nº de preguntas</label>
+                    </div>-->
+                </div>
+                <div class="row">
+                    <div class="col s12" style="margin-bottom: 5px;">Seleccione la siguiente opción si desea que las preguntas a incluir sean <u>filtradas por niveles</u>.</div>
+                    <div class="col s12">
+                        <label>
+                            <input type="checkbox" id="optionLevelsQ" onchange="toogleLevelsQ(this)"/>
+                            <span>Filtrar niveles de preguntas</span>
+                        </label>
+                    </div>
+                    <div class="input-field col s12">
+                        <select id="levelsQ"  multiple disabled>
+                            <option value="Nivel 1(Bajo)">Nivel 1 (Bajo)</option>
+                            <option value="Nivel 2(Medio)" selected>Nivel 2 (Medio)</option>
+                            <option value="Nivel 3(Alto)">Nivel 3 (Alto)</option>
+                            <option value="Nivel 4(Experto)">Nivel 4 (Experto)</option>
+                        </select>
+                        <label for="levelsQ">Indique los niveles a incluir</label>
+                    </div>
+                </div>
+                <div class="row" style="display: none;" id="loading">
+                    <div class="col s12" style="color:#9c27b0">
+                        Creando formulario
+                    </div>
+                    <div class="col s12 progress">
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 center-align">
+                        <button class="btn" type="submit" id="submitBtn">
+                            <i class="material-icons">assignment</i> Generar formulario
+                        </button>
+                        <button class="btn blue-grey" type="button" onclick="google.script.host.close()">Cerrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+
+</html>
