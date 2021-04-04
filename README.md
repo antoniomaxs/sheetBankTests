@@ -10,4 +10,6 @@ Algunas de las características más importantes:
 
 Este proyecto ha sido desarrollado como Trabajo Fin del Máster del Máster universitario en formación del profesorado de educación secundaria obligatoria y bachillerato, formación profesional y enseñanzas de idiomas especialidad informática de la UNED curso 2020-21.
 
+Una vez el entorno haya sido descargado el usuario simplemente deberá configurar la hoja de cálculo donde querrá desplegar el complemento de banco de pregtunas. Para ello deberá configurar el documento .clasp.json y modificar el parámetro scriptId por el identificado de la hoja de cálculo deseada copiado desde la URL.
+
 Entorno base de desarrollado basado en el Google Apps Script Starker de Amit Agarwal - https://github.com/labnol/apps-script-starter
